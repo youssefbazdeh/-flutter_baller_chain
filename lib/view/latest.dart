@@ -27,7 +27,6 @@ class _LatestState extends State<Latest> {
     return Scaffold(
       body: Stack(
         children: [
-
           Image.asset(
             'assets/images/sweatcoin_bg.png',
             fit: BoxFit.cover,

@@ -23,10 +23,6 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       body: Stack(
         children: [
-         /* Positioned.fill(
-              bottom: 0,
-              child: _screens[_selectedIndex],
-          ),*/
           Image.asset(
             'assets/images/sweatcoin_bg.png',
             fit: BoxFit.cover,
@@ -127,7 +123,6 @@ class _LandingPageState extends State<LandingPage> {
               );
             },
           ),
-
           AnimatedOpacity(
             duration: Duration(milliseconds: 400),
             opacity: _showContent ? 1.0 : 0.0,
@@ -135,7 +130,6 @@ class _LandingPageState extends State<LandingPage> {
               child: Stack(
                 children: [
                   // Add your landing page content here
-
                   Positioned(
                     top: 20.0,
                     right: 20.0,
@@ -284,7 +278,6 @@ class _LandingPageState extends State<LandingPage> {
                           ),
                         )
                     ),
-
                   ),
                   Positioned(
                     top: 300,
@@ -388,7 +381,8 @@ class _LandingPageState extends State<LandingPage> {
                                       ),
                                     ),
                                   ],
-                                ),),
+                                ),
+                                ),
                                 SizedBox(width: 30,),
                                 Container(child: Column(
                                   children: [
