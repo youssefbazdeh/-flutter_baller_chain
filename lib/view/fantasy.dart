@@ -1,7 +1,11 @@
 import 'package:ballerchain/model/player.dart';
+import 'package:ballerchain/model/playerepl.dart';
+import 'package:ballerchain/view/fixtures.dart';
 import 'package:ballerchain/view/leagues.dart';
+import 'package:ballerchain/view/pickTeam.dart';
 import 'package:ballerchain/view/stats.dart';
 import 'package:ballerchain/view/test.dart';
+import 'package:ballerchain/viewModel/player_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../common/theme_helper.dart';
@@ -15,6 +19,9 @@ class Fantasy extends StatefulWidget {
 }
 
 class _FantasyState extends State<Fantasy> {
+  final PlayerViewModel  _playerViewModel = PlayerViewModel();
+  List<PlayerEPL> _playerList = [];
+
   int _selectedIndex = 2;
   List<Player> players = [
     Player.withName("De Brueyn","Manchester City","assets/images/city.png"),
@@ -40,35 +47,40 @@ class _FantasyState extends State<Fantasy> {
 
   ];
   List<Player> playa= [
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+    Player(1,"Rashford","Forward",1,"PSG","psg.png",12,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/info.png"),
     Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
-    Player(1,"De Brueyn","Forward",1,"PSG","psg.png",3,1200,80,30,2,25,5,0,0,12,8,0,false,"assets/images/cityy.png"),
+
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _getPlayers();
+  }
+
+  void _getPlayers() async {
+    List<PlayerEPL> players = await _playerViewModel.fetchAllPlayers();
+    setState(() {
+      _playerList = players;
+      print(players);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +252,10 @@ class _FantasyState extends State<Fantasy> {
                                                 style: ThemeHelper().buttonStyle3(),
                                                 onPressed: () {
                                                   // Do something when the button is pressed
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => PickTeam(selectedPlayers: playa)),
+                                                  );
                                                 },
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -329,6 +345,10 @@ class _FantasyState extends State<Fantasy> {
                                                 style: ThemeHelper().buttonStyle4(),
                                                 onPressed: () {
                                                   // Do something when the button is pressed
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => Fixtures()),
+                                                  );
                                                 },
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -387,7 +407,7 @@ class _FantasyState extends State<Fantasy> {
                                                   // Do something when the button is pressed
                                                   Navigator.push(
                                                     context,
-                                                    MaterialPageRoute(builder: (context) => Leagues(players: players)),
+                                                    MaterialPageRoute(builder: (context) => Leagues(players: _playerList)),
                                                   );
                                                 },
                                                 child: Row(

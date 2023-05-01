@@ -1,6 +1,8 @@
+import 'package:ballerchain/utils/const.dart';
+import 'package:ballerchain/viewModel/player_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
-import '../model/player.dart';
+import '../model/playerepl.dart';
 
 class Leagues extends StatefulWidget {
   Leagues({
@@ -8,48 +10,85 @@ class Leagues extends StatefulWidget {
     required this.players,
   }) : super(key: key);
 
-  final List<Player> players;
+  final List<PlayerEPL> players;
   @override
   _LeaguesState createState() => _LeaguesState();
 }
 
 class _LeaguesState extends State<Leagues> {
-
+  final PlayerViewModel  _playerViewModel = PlayerViewModel();
+  List<PlayerEPL> _playerList = [];
   String? _selectedTeam; // store the selected team value here
-  final List<String> _teams = [    'All Clubs',  'Arsenal',    'Chelsea',    'Liverpool',    'Manchester City',    'Manchester United',    'Tottenham Hotspur'  ];
+  final List<String> _teams = [    'All Clubs',  "Arsenal",
+    "Aston Villa",
+    "Brentford",
+    "Brighton",
+    "Bournemouth",
+    "Chelsea",
+    "Crystal Palace",
+    "Everton",
+    "Fulham",
+    "Leeds",
+    "Leicester",
+    "Liverpool",
+    "Manchester City",
+    "Manchester Utd",
+    "Newcastle",
+    "Nottingham",
+    "Southampton",
+    "Tottenham",
+    "West Ham",
+    "Wolves" ];
 
   String? _selectedPosition; // store the selected team value here
   final List<String> _positions = [    'All Positions',    'Goalkeepers',    'Defenders',    'Midfielders',    'Forwards' ];
 
-  List<Player> _players = [
-    Player.withName("De Brueyn","Manchester City","assets/images/city.png"),
-  ];
-
-  List<Player> _searchResult = [];
+  List<PlayerEPL> _searchResult = [];
   TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _searchResult = List.from(_players);
-    print(_searchResult);
+    _getPlayers();
+  }
+
+  void _getPlayers() async {
+    List<PlayerEPL> players = await _playerViewModel.fetchAllPlayers();
+    setState(() {
+      _playerList = players;
+      _searchResult = players; // initialize search results with all players
+    });
+  }
+
+  void _filterPlayers() {
+    List<PlayerEPL> filteredList = List.from(_playerList);
+
+    if (_selectedTeam != null && _selectedTeam != 'All Clubs') {
+      filteredList = filteredList
+          .where((player) => player.team == _selectedTeam)
+          .toList();
+    }
+
+
+    setState(() {
+      _searchResult = filteredList;
+    });
   }
 
   void _onSearchTextChanged(String searchText) {
-    _searchResult.clear();
-
     if (searchText.isEmpty) {
-      setState(() {_searchResult = List.from(_players);});
+      setState(() {
+        _searchResult = List.from(_playerList); // if search text is empty, show all players
+      });
       return;
     }
 
-    _players.forEach((player) {
-      if (player.name!.toLowerCase().contains(searchText.toLowerCase())) {
-        _searchResult.add(player);
-      }
+    setState(() {
+      _searchResult = _playerList
+          .where((player) =>
+          player.name!.toLowerCase().contains(searchText.toLowerCase()))
+          .toList(); // filter the player list based on search text
     });
-
-    setState(() {});
   }
 
   @override
@@ -114,12 +153,11 @@ class _LeaguesState extends State<Leagues> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: TextField(
                           controller: _searchController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(color: Colors.black),
-                            icon: Icon(Icons.search,color: Colors.black),
-                          ),
                           onChanged: _onSearchTextChanged,
+                          decoration: InputDecoration(
+                            hintText: 'Search by player name',
+                            prefixIcon: Icon(Icons.search),
+                          ),
                         ),
                       ),
                     ),
@@ -160,6 +198,7 @@ class _LeaguesState extends State<Leagues> {
                                     setState(() {
                                       _selectedTeam = value!;
                                     });
+                                    _filterPlayers();
                                   },
                                 ),
                               ),
@@ -209,27 +248,28 @@ class _LeaguesState extends State<Leagues> {
                         ),
                       ],
                     ),
-                    Container(
-                          height: 650,
-                          child:
-                          HorizontalDataTable(
-                            tableHeight: 650,
-                            leftHandSideColumnWidth: 180,
-                            rightHandSideColumnWidth: 500,
-                            isFixedHeader: true,
-                            headerWidgets: _getTitleWidget(),
-                            leftSideItemBuilder: _generateFirstColumnRow,
-                            rightSideItemBuilder: _generateRightHandSideColumnRow,
-                            itemCount: widget.players.length,
-                            rowSeparatorWidget: const Divider(
-                              color: Colors.black54,
-                              height: 1.0,
-                              thickness: 0.0,
-                            ),
-                            leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
-                            rightHandSideColBackgroundColor: Color(0xFFFFFFFF),
-                          ),
-                        )
+                    Expanded(child:  Container(
+                      height: 650,
+                      child:
+                      HorizontalDataTable(
+                        tableHeight: 650,
+                        leftHandSideColumnWidth: 200,
+                        rightHandSideColumnWidth: 500,
+                        isFixedHeader: true,
+                        headerWidgets: _getTitleWidget(),
+                        leftSideItemBuilder: _generateFirstColumnRow,
+                        rightSideItemBuilder: _generateRightHandSideColumnRow,
+                        itemCount: _searchResult.length,
+                        rowSeparatorWidget: const Divider(
+                          color: Colors.black54,
+                          height: 1.0,
+                          thickness: 0.0,
+                        ),
+                        leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
+                        rightHandSideColBackgroundColor: Color(0xFFFFFFFF),
+                      ),
+                    ))
+
                   ],
                 ),
               )
@@ -243,12 +283,12 @@ class _LeaguesState extends State<Leagues> {
     return [
       _getTitleItemWidget('Player', 100),
       _getTitleItemWidget('Value', 50),
-      _getTitleItemWidget('Selected', 50),
-      _getTitleItemWidget('GW29', 50),
-      _getTitleItemWidget('Total Points', 50),
-      _getTitleItemWidget('GW Transfers in', 50),
-      _getTitleItemWidget('GW Transfers out', 50),
-      _getTitleItemWidget('Bonus Points', 50),
+      _getTitleItemWidget('Rating', 50),
+      _getTitleItemWidget('Age', 50),
+      _getTitleItemWidget('Matches Played', 50),
+      _getTitleItemWidget('Goals', 50),
+      _getTitleItemWidget('Yellow Cards', 50),
+      _getTitleItemWidget('Red Cards', 50),
       _getTitleItemWidget('GW30', 50),
       _getTitleItemWidget('GW30', 50),
       _getTitleItemWidget('GW30', 50),
@@ -263,56 +303,62 @@ class _LeaguesState extends State<Leagues> {
       alignment: Alignment.center,
     );
   }
-  Widget _generateFirstColumnRow(BuildContext context, int index) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+  Widget _generateFirstColumnRow(BuildContext context, int index,) {
+    PlayerEPL pla = _searchResult[index];
+    String imgpla = pla.image!;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Column(
         children: [
-          SizedBox(width: 5),
-          Container(
-            child: Image.asset("assets/images/info.png"),
-            width: 13,
-            height: 13,
-            alignment: Alignment.topRight,
-          ),
-          SizedBox(width: 8),
-          Container(
-            child: Image.asset(widget.players[index].teamImage!),
-            width: 30,
-            height: 30,
-            alignment: Alignment.centerLeft,
-          ),
-          SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                widget.players[index].name!,
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+              Container(
+                child: Image.asset("assets/images/info.png"),
+                width: 13,
+                height: 1,
+                alignment: Alignment.topRight,
               ),
-              Text(
-                widget.players[index].teamName!,
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
+              Container(
+                child: Image.network('$image_url$imgpla'),
+                width: 30,
+                height: 30,
+                alignment: Alignment.centerLeft,
+              ),
+              SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    pla.name!,
+                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    pla.team!,
+                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
+                  ),
+                ],
               ),
             ],
           ),
-          SizedBox(width: 20),
-          Container(
-            child: Image.asset("assets/images/star.png"),
-            width: 13,
-            height: 13,
-            alignment: Alignment.topRight,
-          ),
+          SizedBox(height: 12),
         ],
       ),
-      width: 200,
-      height: 52,
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-      alignment: Alignment.centerLeft,
+      Container(
+        child: Image.asset("assets/images/star.png"),
+        width: 13,
+        height: 13,
+      ),
+    ],
+
+
     );
   }
   Widget _generateRightHandSideColumnRow(BuildContext context, int index) {
+    PlayerEPL pla = _searchResult[index];
     return Row(
       children: <Widget>[
         Container(
@@ -323,42 +369,42 @@ class _LeaguesState extends State<Leagues> {
           alignment: Alignment.center,
         ),
         Container(
-          child: Text("25.7%",style: TextStyle(fontSize: 10)),
+          child: Text(pla.rating!.toString(),style: TextStyle(fontSize: 10)),
           width: 50,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.center,
         ),
         Container(
-          child: Text("10",style: TextStyle(fontSize: 10)),
+          child: Text(pla.age!,style: TextStyle(fontSize: 10)),
           width: 50,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.center,
         ),
         Container(
-          child: Text("120",style: TextStyle(fontSize: 10)),
+          child: Text(pla.matches_played!,style: TextStyle(fontSize: 10)),
           width: 50,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.center,
         ),
         Container(
-          child: Text("15376",style: TextStyle(fontSize: 10)),
+          child: Text(pla.goals!,style: TextStyle(fontSize: 10)),
           width: 50,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.center,
         ),
         Container(
-          child: Text("3080",style: TextStyle(fontSize: 10)),
+          child: Text(pla.yellow_cards!,style: TextStyle(fontSize: 10)),
           width: 50,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.center,
         ),
         Container(
-          child: Text("20",style: TextStyle(fontSize: 10)),
+          child: Text(pla.red_cards!,style: TextStyle(fontSize: 10)),
           width: 50,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),

@@ -54,7 +54,6 @@ class ThemeHelper{
       borderRadius: BorderRadius.circular(30),
     );
   }
-
   BoxDecoration buttonBoxDecoration1(BuildContext context, [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
     Color c2 = Theme.of(context).accentColor;
@@ -82,8 +81,6 @@ class ThemeHelper{
       borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30),bottomRight: Radius.circular(30)),
     );
   }
-
-
   BoxDecoration buttonBoxDecoration2(BuildContext context, [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
     Color c2 = Theme.of(context).accentColor;
@@ -111,7 +108,6 @@ class ThemeHelper{
       borderRadius: BorderRadius.circular(50),
     );
   }
-
   BoxDecoration buttonBoxDecoration3(BuildContext context, [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
     Color c2 = Theme.of(context).accentColor;
@@ -139,7 +135,6 @@ class ThemeHelper{
       borderRadius: BorderRadius.circular(5),
     );
   }
-
   BoxDecoration buttonBoxDecoration4(BuildContext context, [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
     Color c2 = Theme.of(context).accentColor;
@@ -167,7 +162,6 @@ class ThemeHelper{
       borderRadius: BorderRadius.circular(0),
     );
   }
-
   BoxDecoration buttonBoxDecoration5(BuildContext context, [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
     Color c2 = Theme.of(context).accentColor;
@@ -195,6 +189,117 @@ class ThemeHelper{
       borderRadius: BorderRadius.only(bottomRight: Radius.circular(5),bottomLeft: Radius.circular(5)),
     );
   }
+  BoxDecoration buttonBoxDecoration6(BuildContext context, [String color1 = "", String color2 = ""]) {
+    Color c1 = Theme.of(context).primaryColor;
+    Color c2 = Theme.of(context).accentColor;
+    if (color1.isEmpty == false) {
+      c1 = HexColor(color1);
+    }
+    if (color2.isEmpty == false) {
+      c2 = HexColor(color2);
+    }
+
+    return BoxDecoration(
+      boxShadow: [
+        BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
+      ],
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        stops: [0.0, 1.0],
+        colors: [
+          c1,
+          c2,
+        ],
+      ),
+      borderRadius: BorderRadius.only(bottomRight: Radius.circular(12),bottomLeft: Radius.circular(12)),
+    );
+  }
+  BoxDecoration buttonBoxDecoration7(BuildContext context, [String color1 = "", String color2 = ""]) {
+    Color c1 = Theme.of(context).primaryColor;
+    Color c2 = Theme.of(context).accentColor;
+    if (color1.isEmpty == false) {
+      c1 = HexColor(color1);
+    }
+    if (color2.isEmpty == false) {
+      c2 = HexColor(color2);
+    }
+
+    return BoxDecoration(
+      boxShadow: [
+        BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
+      ],
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        stops: [0.0, 1.0],
+        colors: [
+          c1,
+          c2,
+        ],
+      ),
+      color: Colors.white.withOpacity(0.3),
+      borderRadius: BorderRadius.only(bottomRight: Radius.circular(0),bottomLeft: Radius.circular(0)),
+    );
+  }
+  BoxDecoration buttonBoxDecoration8(BuildContext context, [String color1 = "", String color2 = ""]) {
+    Color c1 = Theme.of(context).primaryColor;
+    Color c2 = Theme.of(context).accentColor;
+
+    if (color1.isEmpty == false) {
+      c1 = HexColor(color1);
+    }
+    if (color2.isEmpty == false) {
+      c2 = HexColor(color2);
+    }
+
+
+    return BoxDecoration(
+      boxShadow: [
+        BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
+      ],
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        stops: [0.2,1],
+        colors: [
+          c1,
+          c2,
+
+        ],
+      ),
+      color: Colors.deepPurple.shade300,
+      borderRadius: BorderRadius.circular(5),
+    );
+  }
+  BoxDecoration buttonBoxDecoration9(BuildContext context,[String color1 = "", String color2 = ""]) {
+    Color c1 = Theme.of(context).primaryColor;
+    Color c2 = Theme.of(context).accentColor;
+    if (color1.isEmpty == false) {
+      c1 = HexColor(color1);
+    }
+    if (color2.isEmpty == false) {
+      c2 = HexColor(color2);
+    }
+
+
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        stops: [0.0, 1.0],
+        colors: [
+          c1,
+          c2,
+        ],
+      ),
+      color: Colors.deepPurple.shade300,
+      borderRadius: BorderRadius.circular(5),
+    );
+  }
+
+
+
 
   ButtonStyle buttonStyle() {
     return ButtonStyle(
@@ -223,7 +328,6 @@ class ThemeHelper{
       shadowColor: MaterialStateProperty.all(Colors.transparent),
     );
   }
-
   ButtonStyle buttonStyle4() {
     return ButtonStyle(
       minimumSize: MaterialStateProperty.all(Size(50, 50)),

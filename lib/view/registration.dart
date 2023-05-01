@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:ballerchain/viewModel/registration_view_model.dart';
 
+import '../model/team.dart';
 import '../model/user.dart';
 
 
@@ -364,7 +365,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     phonenumber: _phonenumberController.text,
                                     birthday: _birthdayController.text,
                                     password: _passwordController.text,
-                                    image: _imageFile!.path.toString()
+                                    image: _imageFile!.path.toString(), team: Team.empty(1,"",[])
 
                                 );
 

@@ -1,11 +1,12 @@
 import 'package:ballerchain/SplashScreen.dart';
-import 'package:ballerchain/view/home.dart';
-import 'package:ballerchain/view/login.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 void main() {
-  runApp(LoginUI());
+  runApp(
+      LoginUI()
+  );
 }
 
 class LoginUI extends StatelessWidget {

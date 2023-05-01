@@ -171,4 +171,6 @@ class Player {
   set playerID(int? value) {
     _playerID = value;
   }
+
+  static Player? fromJson(Map<String, dynamic> playerJson) {}
 }
